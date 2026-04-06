@@ -10,15 +10,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -58,10 +56,10 @@ public class MainController implements Initializable {
 
         lisaaAsuntoPainike.setOnAction(event -> avaaLisaysIkkuna());
         muokkaaPainike.setOnAction(event -> avaaAsunnonMuokkaus());
+        poistaPainike.setOnAction(event -> poistaValittuAsunto());
 
         asuntoTaulu.setRowFactory(tv -> {
             TableRow<Asunto> rivi = new TableRow<>();
-    // Estetään tyhjät ja virheelliset syötteet
 
             rivi.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && !rivi.isEmpty()) {
@@ -71,6 +69,9 @@ public class MainController implements Initializable {
 
             return rivi;
         });
+
+
+
     }
 
     private void avaaLisaysIkkuna() {
@@ -118,6 +119,27 @@ public class MainController implements Initializable {
 
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    //Asunnon poistaminen
+    private void poistaValittuAsunto() {
+        Asunto valittuAsunto = asuntoTaulu.getSelectionModel().getSelectedItem();
+
+        if (valittuAsunto == null) {
+            return;
+        }
+
+        //ALERT systeemi
+        Alert varmistus = new Alert(Alert.AlertType.CONFIRMATION);
+        varmistus.setTitle("Vahvista poisto");
+        varmistus.setHeaderText("Poistetaanko asunto?");
+        varmistus.setContentText("Poistetaan asunto " + valittuAsunto.getAsunto() + ".");
+
+        Optional<ButtonType> vastaus = varmistus.showAndWait();
+
+        if (vastaus.isPresent() && vastaus.get() == ButtonType.OK) {
+            asunnot.remove(valittuAsunto);
         }
     }
 }

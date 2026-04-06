@@ -27,8 +27,9 @@ public class AddAsuntoController implements Initializable {
     private Asunto uusiAsunto;
 
     @Override
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        asuntoKentta.setPromptText("max 2 merkkiä");
+        asuntoKentta.setPromptText("Asunto max 5 merkkiä");
         asukasmaaraKentta.setPromptText("< 10");
 
         suljePainike.setOnAction(event -> sulje());
@@ -47,7 +48,8 @@ public class AddAsuntoController implements Initializable {
 
         String asunto = asuntoKentta.getText();
 
-        if (asunto == null || asunto.isBlank() || asunto.length() > 2) {
+        //Estetään virheelliset syötteet
+        if (asunto == null || asunto.isBlank() || asunto.length() > 5) {
             asuntoKentta.setStyle("-fx-border-color: red;");
             ok = false;
         }

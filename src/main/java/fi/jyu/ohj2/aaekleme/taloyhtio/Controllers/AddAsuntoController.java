@@ -71,7 +71,7 @@ public class AddAsuntoController implements Initializable {
             return;
         }
 
-        uusiAsunto = new Asunto(asunto, asukasmaara);
+        uusiAsunto = new Asunto(asunto);
         sulje();
     }
 

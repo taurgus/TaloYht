@@ -1,59 +1,41 @@
 package fi.jyu.ohj2.aaekleme.taloyhtio;
 
-import javafx.beans.property.*;
-
 public class Asukas {
 
-    private final StringProperty nimi = new SimpleStringProperty("");
-    private final StringProperty sahkoposti = new SimpleStringProperty("");
-    private final IntegerProperty syntymavuosi = new SimpleIntegerProperty(0);
+    private String nimi;
+    private int syntymavuosi;
+    private String sahkoposti;
 
-    public Asukas() {}
+    public Asukas() {
+    }
 
-    public Asukas(String nimi, String sahkoposti, int syntymavuosi) {
-        setNimi(nimi);
-        setSahkoposti(sahkoposti);
-        setSyntymavuosi(syntymavuosi);
+    public Asukas(String nimi, int syntymavuosi, String sahkoposti) {
+        this.nimi = nimi;
+        this.syntymavuosi = syntymavuosi;
+        this.sahkoposti = sahkoposti;
     }
 
     public String getNimi() {
-        return nimi.get();
-    }
-
-    public void setNimi(String nimi) {
-        this.nimi.set(nimi);
-    }
-
-    public StringProperty nimiProperty() {
         return nimi;
     }
 
-    public String getSahkoposti() {
-        return sahkoposti.get();
-    }
-
-    public void setSahkoposti(String sahkoposti) {
-        this.sahkoposti.set(sahkoposti);
-    }
-
-    public StringProperty sahkopostiProperty() {
-        return sahkoposti;
+    public void setNimi(String nimi) {
+        this.nimi = nimi;
     }
 
     public int getSyntymavuosi() {
-        return syntymavuosi.get();
-    }
-
-    public void setSyntymavuosi(int syntymavuosi) {
-        this.syntymavuosi.set(syntymavuosi);
-    }
-
-    public IntegerProperty syntymavuosiProperty() {
         return syntymavuosi;
     }
 
-    @Override
-    public String toString() {
-        return getNimi();
+    public void setSyntymavuosi(int syntymavuosi) {
+        this.syntymavuosi = syntymavuosi;
+    }
+
+    public String getSahkoposti() {
+        return sahkoposti;
+    }
+
+    public void setSahkoposti(String sahkoposti) {
+        this.sahkoposti = sahkoposti;
     }
 }

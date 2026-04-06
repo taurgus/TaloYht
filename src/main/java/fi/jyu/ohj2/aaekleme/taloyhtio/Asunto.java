@@ -1,15 +1,18 @@
 package fi.jyu.ohj2.aaekleme.taloyhtio;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Asunto {
+
     private String asunto;
-    private int asukasmaara;
+    private List<Asukas> asukkaat = new ArrayList<>();
 
     public Asunto() {
     }
 
-    public Asunto(String asunto, int asukasmaara) {
+    public Asunto(String asunto) {
         this.asunto = asunto;
-        this.asukasmaara = asukasmaara;
     }
 
     public String getAsunto() {
@@ -20,11 +23,16 @@ public class Asunto {
         this.asunto = asunto;
     }
 
-    public int getAsukasmaara() {
-        return asukasmaara;
+    public List<Asukas> getAsukkaat() {
+        return asukkaat;
     }
 
-    public void setAsukasmaara(int asukasmaara) {
-        this.asukasmaara = asukasmaara;
+    public void setAsukkaat(List<Asukas> asukkaat) {
+        this.asukkaat = asukkaat;
+    }
+
+    // Asukasmäärä lasketaan listasta
+    public int getAsukasmaara() {
+        return asukkaat.size();
     }
 }

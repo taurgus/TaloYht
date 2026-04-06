@@ -47,6 +47,7 @@ public class MainController implements Initializable {
     private Button poistaPainike;
 
     private final ObservableList<Asunto> asunnot = FXCollections.observableArrayList();
+    //JSON
     private final AsuntoTallennus tallennus = new AsuntoTallennus(Path.of("asunnot.json"));
 
     @Override
@@ -121,15 +122,18 @@ public class MainController implements Initializable {
 
             Stage dialogi = new Stage();
             dialogi.setScene(new Scene(root));
-            dialogi.setTitle("Muokkaa asuntoa");
+            dialogi.setTitle("Muokkaa asuntoa " +  valittuAsunto.getAsunto());
             dialogi.initModality(Modality.APPLICATION_MODAL);
             dialogi.showAndWait();
+            //Tallennetaan asukasmäärä
+            asuntoTaulu.refresh();
+            tallennus.tallennaAsunnot(asunnot);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    //Alert-systeemi
+
     private void poistaValittuAsunto() {
         Asunto valittuAsunto = asuntoTaulu.getSelectionModel().getSelectedItem();
 
@@ -137,6 +141,7 @@ public class MainController implements Initializable {
             return;
         }
 
+        //Alert-systeemi
         Alert varmistus = new Alert(Alert.AlertType.CONFIRMATION);
         varmistus.setTitle("Vahvista poisto");
         varmistus.setHeaderText("Poistetaanko asunto?");

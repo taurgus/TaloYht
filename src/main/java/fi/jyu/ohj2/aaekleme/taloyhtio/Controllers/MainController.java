@@ -1,8 +1,10 @@
-package fi.jyu.ohj2.aaekleme.taloyhtio;
+package fi.jyu.ohj2.aaekleme.taloyhtio.Controllers;
 
-import fi.jyu.ohj2.aaekleme.taloyhtio.Controllers.AsuntoEditController;
+import fi.jyu.ohj2.aaekleme.taloyhtio.Asunto;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -39,32 +41,27 @@ public class MainController implements Initializable {
     @FXML
     private Button poistaPainike;
 
+    private final ObservableList<Asunto> asunnot = FXCollections.observableArrayList();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        // Sarakkeet
         asuntoSarake.setCellValueFactory(data ->
                 new SimpleStringProperty(data.getValue().getAsunto())
         );
 
         asukasmaaraSarake.setCellValueFactory(data ->
-                new SimpleIntegerProperty(0)
+                new SimpleIntegerProperty(data.getValue().getAsukasmaara())
         );
 
-        // Testidata
-        asuntoTaulu.getItems().addAll(
-                new Asunto("A1"),
-                new Asunto("A2"),
-                new Asunto("B1")
-        );
 
-        // Nappien toiminnot
+        asuntoTaulu.setItems(asunnot);
+
         lisaaAsuntoPainike.setOnAction(event -> avaaLisaysIkkuna());
         muokkaaPainike.setOnAction(event -> avaaAsunnonMuokkaus());
 
-        // Tuplaklikkaus
         asuntoTaulu.setRowFactory(tv -> {
             TableRow<Asunto> rivi = new TableRow<>();
+    // Estetään tyhjät ja virheelliset syötteet
 
             rivi.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && !rivi.isEmpty()) {
@@ -76,6 +73,29 @@ public class MainController implements Initializable {
         });
     }
 
+    private void avaaLisaysIkkuna() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fi/jyu/ohj2/aaekleme/taloyhtio/add-asunto.fxml"));
+            Parent root = loader.load();
+
+            AddAsuntoController ohjain = loader.getController();
+
+            Stage dialogi = new Stage();
+            dialogi.setScene(new Scene(root));
+            dialogi.setTitle("Lisää asunto");
+            dialogi.initModality(Modality.APPLICATION_MODAL);
+            dialogi.showAndWait();
+
+            Asunto uusiAsunto = ohjain.getUusiAsunto();
+            if (uusiAsunto != null) {
+                asunnot.add(uusiAsunto);
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private void avaaAsunnonMuokkaus() {
         Asunto valittuAsunto = asuntoTaulu.getSelectionModel().getSelectedItem();
 
@@ -84,7 +104,7 @@ public class MainController implements Initializable {
         }
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("edit-asunto.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fi/jyu/ohj2/aaekleme/taloyhtio/edit-asunto.fxml"));
             Parent root = loader.load();
 
             AsuntoEditController ohjain = loader.getController();
@@ -93,22 +113,6 @@ public class MainController implements Initializable {
             Stage dialogi = new Stage();
             dialogi.setScene(new Scene(root));
             dialogi.setTitle("Muokkaa asuntoa");
-            dialogi.initModality(Modality.APPLICATION_MODAL);
-            dialogi.showAndWait();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void avaaLisaysIkkuna() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("add-asunto.fxml"));
-            Parent root = loader.load();
-
-            Stage dialogi = new Stage();
-            dialogi.setScene(new Scene(root));
-            dialogi.setTitle("Lisää asunto");
             dialogi.initModality(Modality.APPLICATION_MODAL);
             dialogi.showAndWait();
 

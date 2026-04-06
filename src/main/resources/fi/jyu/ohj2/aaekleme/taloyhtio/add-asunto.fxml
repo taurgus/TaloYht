@@ -10,7 +10,7 @@
 <VBox spacing="10.0"
       xmlns="http://javafx.com/javafx/25"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="fi.jyu.ohj2.aaekleme.taloyhtio.AddAsuntoController">
+      fx:controller="fi.jyu.ohj2.aaekleme.taloyhtio.Controllers.AddAsuntoController">
    <padding>
       <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
    </padding>

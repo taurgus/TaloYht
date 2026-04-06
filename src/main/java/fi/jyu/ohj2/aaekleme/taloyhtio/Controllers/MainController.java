@@ -1,6 +1,7 @@
 package fi.jyu.ohj2.aaekleme.taloyhtio.Controllers;
 
 import fi.jyu.ohj2.aaekleme.taloyhtio.Asunto;
+import fi.jyu.ohj2.aaekleme.taloyhtio.AsuntoTallennus;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -10,12 +11,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -40,6 +47,7 @@ public class MainController implements Initializable {
     private Button poistaPainike;
 
     private final ObservableList<Asunto> asunnot = FXCollections.observableArrayList();
+    private final AsuntoTallennus tallennus = new AsuntoTallennus(Path.of("asunnot.json"));
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -51,7 +59,7 @@ public class MainController implements Initializable {
                 new SimpleIntegerProperty(data.getValue().getAsukasmaara())
         );
 
-
+        asunnot.addAll(tallennus.lataaAsunnot());
         asuntoTaulu.setItems(asunnot);
 
         lisaaAsuntoPainike.setOnAction(event -> avaaLisaysIkkuna());
@@ -69,9 +77,6 @@ public class MainController implements Initializable {
 
             return rivi;
         });
-
-
-
     }
 
     private void avaaLisaysIkkuna() {
@@ -90,6 +95,9 @@ public class MainController implements Initializable {
             Asunto uusiAsunto = ohjain.getUusiAsunto();
             if (uusiAsunto != null) {
                 asunnot.add(uusiAsunto);
+                tallennus.tallennaAsunnot(asunnot);
+                asuntoTaulu.getSelectionModel().select(uusiAsunto);
+                asuntoTaulu.requestFocus();
             }
 
         } catch (IOException e) {
@@ -121,8 +129,7 @@ public class MainController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-
-    //Asunnon poistaminen
+    //Alert-systeemi
     private void poistaValittuAsunto() {
         Asunto valittuAsunto = asuntoTaulu.getSelectionModel().getSelectedItem();
 
@@ -130,7 +137,6 @@ public class MainController implements Initializable {
             return;
         }
 
-        //ALERT systeemi
         Alert varmistus = new Alert(Alert.AlertType.CONFIRMATION);
         varmistus.setTitle("Vahvista poisto");
         varmistus.setHeaderText("Poistetaanko asunto?");
@@ -140,6 +146,7 @@ public class MainController implements Initializable {
 
         if (vastaus.isPresent() && vastaus.get() == ButtonType.OK) {
             asunnot.remove(valittuAsunto);
+            tallennus.tallennaAsunnot(asunnot);
         }
     }
 }

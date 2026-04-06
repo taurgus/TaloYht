@@ -10,10 +10,11 @@ public class Asunto {
         this.asunto = asunto;
     }
 
+    //GETTERI
     public String getAsunto() {
         return asunto;
     }
-
+    //SETTERI
     public void setAsunto(String asunto) {
         this.asunto = asunto;
     }

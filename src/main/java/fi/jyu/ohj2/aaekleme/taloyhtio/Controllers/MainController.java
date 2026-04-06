@@ -1,5 +1,6 @@
 package fi.jyu.ohj2.aaekleme.taloyhtio;
 
+import fi.jyu.ohj2.aaekleme.taloyhtio.Controllers.AsuntoEditController;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -50,17 +51,18 @@ public class MainController implements Initializable {
                 new SimpleIntegerProperty(0)
         );
 
-        // Testidata liikkumista varten
+        // Testidata
         asuntoTaulu.getItems().addAll(
                 new Asunto("A1"),
                 new Asunto("A2"),
                 new Asunto("B1")
         );
 
-        // Muokkaa nappi
+        // Nappien toiminnot
+        lisaaAsuntoPainike.setOnAction(event -> avaaLisaysIkkuna());
         muokkaaPainike.setOnAction(event -> avaaAsunnonMuokkaus());
 
-        // Tuplaklikkaus siirtymiseen
+        // Tuplaklikkaus
         asuntoTaulu.setRowFactory(tv -> {
             TableRow<Asunto> rivi = new TableRow<>();
 
@@ -91,6 +93,22 @@ public class MainController implements Initializable {
             Stage dialogi = new Stage();
             dialogi.setScene(new Scene(root));
             dialogi.setTitle("Muokkaa asuntoa");
+            dialogi.initModality(Modality.APPLICATION_MODAL);
+            dialogi.showAndWait();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void avaaLisaysIkkuna() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("add-asunto.fxml"));
+            Parent root = loader.load();
+
+            Stage dialogi = new Stage();
+            dialogi.setScene(new Scene(root));
+            dialogi.setTitle("Lisää asunto");
             dialogi.initModality(Modality.APPLICATION_MODAL);
             dialogi.showAndWait();
 

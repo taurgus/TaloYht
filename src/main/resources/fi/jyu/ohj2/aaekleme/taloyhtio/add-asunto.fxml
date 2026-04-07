@@ -13,7 +13,7 @@
    </padding>
 
    <children>
-      <Label text="Asunto" />
+      <Label text="Lisää asunto" />
       <TextField fx:id="asuntoKentta" />
 
       <HBox spacing="10.0">

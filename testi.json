@@ -1,0 +1,9 @@
+[ {
+  "asukasmaara" : 1,
+  "asukkaat" : [ {
+    "nimi" : "Matti",
+    "sahkoposti" : "matti@testi.fi",
+    "syntymavuosi" : 1990
+  } ],
+  "asunto" : "A1"
+} ]

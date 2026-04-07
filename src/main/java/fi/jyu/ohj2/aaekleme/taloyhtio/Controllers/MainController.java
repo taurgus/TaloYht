@@ -93,10 +93,25 @@ public class MainController implements Initializable {
             dialogi.initModality(Modality.APPLICATION_MODAL);
             dialogi.showAndWait();
 
+            //Estetään tuplat
             Asunto uusiAsunto = ohjain.getUusiAsunto();
             if (uusiAsunto != null) {
+
+                boolean loytyy = asunnot.stream()
+                        .anyMatch(a -> a.getAsunto().equalsIgnoreCase(uusiAsunto.getAsunto()));
+
+                if (loytyy) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Virhe");
+                    alert.setHeaderText("Asunto on jo olemassa");
+                    alert.setContentText("Asunto " + uusiAsunto.getAsunto() + " on jo lisätty.");
+                    alert.showAndWait();
+                    return;
+                }
+
                 asunnot.add(uusiAsunto);
                 tallennus.tallennaAsunnot(asunnot);
+
                 asuntoTaulu.getSelectionModel().select(uusiAsunto);
                 asuntoTaulu.requestFocus();
             }

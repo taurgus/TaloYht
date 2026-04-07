@@ -16,9 +16,6 @@ public class AddAsuntoController implements Initializable {
     private TextField asuntoKentta;
 
     @FXML
-    private TextField asukasmaaraKentta;
-
-    @FXML
     private Button tallennaPainike;
 
     @FXML
@@ -30,7 +27,7 @@ public class AddAsuntoController implements Initializable {
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         asuntoKentta.setPromptText("Asunto max 5 merkkiä");
-        asukasmaaraKentta.setPromptText("< 10");
+
 
         suljePainike.setOnAction(event -> sulje());
         tallennaPainike.setOnAction(event -> tallenna());
@@ -40,34 +37,12 @@ public class AddAsuntoController implements Initializable {
     }
 
     private void tallenna() {
-        // nollataan tyylit
         asuntoKentta.setStyle("");
-        asukasmaaraKentta.setStyle("");
-
-        boolean ok = true;
 
         String asunto = asuntoKentta.getText();
 
-        //Estetään virheelliset syötteet
-        if (asunto == null || asunto.isBlank() || asunto.length() > 5) {
+        if (asunto == null || asunto.isBlank() || asunto.length() < 2 || asunto.length() > 5) {
             asuntoKentta.setStyle("-fx-border-color: red;");
-            ok = false;
-        }
-
-        int asukasmaara = 0;
-
-        try {
-            asukasmaara = Integer.parseInt(asukasmaaraKentta.getText());
-            if (asukasmaara >= 10) {
-                asukasmaaraKentta.setStyle("-fx-border-color: red;");
-                ok = false;
-            }
-        } catch (Exception e) {
-            asukasmaaraKentta.setStyle("-fx-border-color: red;");
-            ok = false;
-        }
-
-        if (!ok) {
             return;
         }
 

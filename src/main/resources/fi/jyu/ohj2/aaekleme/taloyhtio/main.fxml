@@ -35,6 +35,11 @@
                     </HBox.margin>
                 </Button>
                 <Button fx:id="poistaPainike" mnemonicParsing="false" text="Poista" />
+                <Button fx:id="suljePainike" text="Sulje">
+                    <HBox.margin>
+                        <Insets left="10.0" />
+                    </HBox.margin>
+                </Button>
             </children>
         </HBox>
     </children>

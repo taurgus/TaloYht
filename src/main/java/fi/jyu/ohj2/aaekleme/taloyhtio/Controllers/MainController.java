@@ -46,6 +46,9 @@ public class MainController implements Initializable {
     @FXML
     private Button poistaPainike;
 
+    @FXML
+    private Button suljePainike;
+
     private final ObservableList<Asunto> asunnot = FXCollections.observableArrayList();
     //JSON
     private final AsuntoTallennus tallennus = new AsuntoTallennus(Path.of("asunnot.json"));
@@ -66,6 +69,7 @@ public class MainController implements Initializable {
         lisaaAsuntoPainike.setOnAction(event -> avaaLisaysIkkuna());
         muokkaaPainike.setOnAction(event -> avaaAsunnonMuokkaus());
         poistaPainike.setOnAction(event -> poistaValittuAsunto());
+        suljePainike.setOnAction(e -> sulje());
 
         asuntoTaulu.setRowFactory(tv -> {
             TableRow<Asunto> rivi = new TableRow<>();
@@ -168,5 +172,9 @@ public class MainController implements Initializable {
             asunnot.remove(valittuAsunto);
             tallennus.tallennaAsunnot(asunnot);
         }
+    }
+    private void sulje() {
+        Stage stage = (Stage) suljePainike.getScene().getWindow();
+        stage.close();
     }
 }

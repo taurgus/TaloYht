@@ -40,6 +40,9 @@ public class AsuntoEditController implements Initializable {
     private Button lisaaAsukasPainike;
 
     @FXML
+    private Button muokkaaAsukasPainike;
+
+    @FXML
     private Button poistaAsukasPainike;
 
     @FXML
@@ -66,6 +69,7 @@ public class AsuntoEditController implements Initializable {
         asukasTaulu.setItems(asukkaat);
 
         lisaaAsukasPainike.setOnAction(e -> avaaLisaysIkkuna());
+        muokkaaAsukasPainike.setOnAction(e -> avaaAsukkaanMuokkaus());
         poistaAsukasPainike.setOnAction(e -> poistaValittuAsukas());
         suljePainike.setOnAction(e -> sulje());
     }
@@ -101,6 +105,35 @@ public class AsuntoEditController implements Initializable {
                 asunto.getAsukkaat().clear();
                 asunto.getAsukkaat().addAll(asukkaat);
             }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void avaaAsukkaanMuokkaus() {
+        Asukas valittuAsukas = asukasTaulu.getSelectionModel().getSelectedItem();
+
+        if (valittuAsukas == null) {
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/fi/jyu/ohj2/aaekleme/taloyhtio/edit-asukas.fxml")
+            );
+            Parent root = loader.load();
+
+            EditAsukasController ohjain = loader.getController();
+            ohjain.setAsukas(valittuAsukas);
+
+            Stage dialogi = new Stage();
+            dialogi.setScene(new Scene(root));
+            dialogi.setTitle("Muokkaa asukasta " + valittuAsukas.getNimi());
+            dialogi.initModality(Modality.APPLICATION_MODAL);
+            dialogi.showAndWait();
+
+            asukasTaulu.refresh();
 
         } catch (Exception e) {
             throw new RuntimeException(e);

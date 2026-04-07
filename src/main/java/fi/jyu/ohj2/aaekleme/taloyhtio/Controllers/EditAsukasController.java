@@ -42,17 +42,49 @@ public class EditAsukasController implements Initializable {
         syntymavuosiKentta.setText(String.valueOf(asukas.getSyntymavuosi()));
         sahkopostiKentta.setText(asukas.getSahkoposti());
     }
-
+//Tallennusmetodit ja tarkistukset
     private void tallenna() {
+        nimiKentta.setStyle("");
+        syntymavuosiKentta.setStyle("");
+        sahkopostiKentta.setStyle("");
+
+        boolean ok = true;
+
         String nimi = nimiKentta.getText();
+        String syntymavuosiTeksti = syntymavuosiKentta.getText();
         String sahkoposti = sahkopostiKentta.getText();
 
-        int syntymavuosi;
+        if (nimi == null || nimi.isBlank() || !nimi.matches("[a-zA-ZåäöÅÄÖ ]+")) {
+            nimiKentta.setStyle("-fx-border-color: red;");
+            ok = false;
+        }
+
+        int syntymavuosi = 0;
 
         try {
-            syntymavuosi = Integer.parseInt(syntymavuosiKentta.getText());
+            syntymavuosi = Integer.parseInt(syntymavuosiTeksti);
+
+            if (syntymavuosiTeksti.length() > 4 || syntymavuosi < 1925 || syntymavuosi > 2026 ) {
+                syntymavuosiKentta.setStyle("-fx-border-color: red;");
+                ok = false;
+            }
+
         } catch (Exception e) {
             syntymavuosiKentta.setStyle("-fx-border-color: red;");
+            ok = false;
+        }
+
+        if (sahkoposti == null
+                || sahkoposti.isBlank()
+                || !sahkoposti.contains("@")
+                || sahkoposti.length() < 10
+                || sahkoposti.length() > 20) {
+
+            sahkopostiKentta.setStyle("-fx-border-color: red;");
+            ok = false;
+        }
+
+        if (!ok) {
             return;
         }
 

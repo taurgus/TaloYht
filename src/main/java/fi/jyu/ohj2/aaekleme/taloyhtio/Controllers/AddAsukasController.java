@@ -33,6 +33,8 @@ public class AddAsukasController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tallennaPainike.setOnAction(e -> tallenna());
         suljePainike.setOnAction(e -> sulje());
+        javafx.application.Platform.runLater(() -> tallennaPainike.requestFocus());
+
     }
 
     private void tallenna() {

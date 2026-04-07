@@ -66,6 +66,18 @@ public class AsuntoEditController implements Initializable {
                 new SimpleStringProperty(data.getValue().getSahkoposti())
         );
 
+        asukasTaulu.setRowFactory(tv -> {
+            TableRow<Asukas> rivi = new TableRow<>();
+
+            rivi.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !rivi.isEmpty()) {
+                    avaaAsukkaanMuokkaus();
+                }
+            });
+
+            return rivi;
+        });
+
         asukasTaulu.setItems(asukkaat);
 
         lisaaAsukasPainike.setOnAction(e -> avaaLisaysIkkuna());

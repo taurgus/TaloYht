@@ -40,7 +40,7 @@ public class AddAsuntoController implements Initializable {
         asuntoKentta.setStyle("");
 
         String asunto = asuntoKentta.getText();
-
+        //Virheellisen datan tarkistus ja väriä maailmaan
         if (asunto == null || asunto.isBlank() || asunto.length() < 2 || asunto.length() > 5) {
             asuntoKentta.setStyle("-fx-border-color: red;");
             return;
@@ -54,7 +54,7 @@ public class AddAsuntoController implements Initializable {
     public Asunto getUusiAsunto() {
         return uusiAsunto;
     }
-
+    //Sulkumetodi
     private void sulje() {
         Stage ikkuna = (Stage) suljePainike.getScene().getWindow();
         ikkuna.close();

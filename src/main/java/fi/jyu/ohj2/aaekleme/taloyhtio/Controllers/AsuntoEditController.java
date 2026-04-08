@@ -66,9 +66,10 @@ public class AsuntoEditController implements Initializable {
                 new SimpleStringProperty(data.getValue().getSahkoposti())
         );
 
-        asukasTaulu.setRowFactory(tv -> {
+        asukasTaulu.setRowFactory(_ -> {
             TableRow<Asukas> rivi = new TableRow<>();
 
+            // Tuplaklikkaus avaa ikkunan
             rivi.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && !rivi.isEmpty()) {
                     avaaAsukkaanMuokkaus();
@@ -77,43 +78,66 @@ public class AsuntoEditController implements Initializable {
 
             return rivi;
         });
-
+        //Laitetaan data tauluun
         asukasTaulu.setItems(asukkaat);
 
-        lisaaAsukasPainike.setOnAction(e -> avaaLisaysIkkuna());
-        muokkaaAsukasPainike.setOnAction(e -> avaaAsukkaanMuokkaus());
-        poistaAsukasPainike.setOnAction(e -> poistaValittuAsukas());
-        suljePainike.setOnAction(e -> sulje());
+        //Nappuloiden toiminnallisuudet
+        lisaaAsukasPainike.setOnAction(_ -> avaaLisaysIkkuna());
+        muokkaaAsukasPainike.setOnAction(_ -> avaaAsukkaanMuokkaus());
+        poistaAsukasPainike.setOnAction(_ -> poistaValittuAsukas());
+        suljePainike.setOnAction(_ -> sulje());
     }
-
+        //Vastaanotetaan asunto
     public void setAsunto(Asunto asunto) {
         this.asunto = asunto;
+
+        //Kertoo mikä asunto kyseessä
         asuntoLabel.setText("Asunto: " + asunto.getAsunto());
 
+        //Ladataan asukkaat
         asukkaat.clear();
         asukkaat.addAll(asunto.getAsukkaat());
     }
-
+        //Metodi asukkaiden lisääntymis ikkunaa varten
     private void avaaLisaysIkkuna() {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/fi/jyu/ohj2/aaekleme/taloyhtio/add-asukas.fxml")
             );
             Parent root = loader.load();
-
+        //Haetaan näkymän controller
             AddAsukasController ohjain = loader.getController();
 
+        //Luodaan uusi stage/ikkuna
             Stage dialogi = new Stage();
             dialogi.setScene(new Scene(root));
+
             dialogi.setTitle("Lisää asukas");
+
+        //Käyttäjä ei voi klikata pääikkunaa ennen näkymän sulkemista
             dialogi.initModality(Modality.APPLICATION_MODAL);
             dialogi.showAndWait();
-
+        //Haetaan käyttäjän syöttämä asukas controllerilta
             Asukas uusi = ohjain.getUusiAsukas();
             if (uusi != null) {
+                //Estetään saman asukkaan lisääminen, nimi + syntymävuosi, asukkailla voi olla sama sposti
+                boolean loytyy = asukkaat.stream()
+                        .anyMatch(a ->
+                                a.getNimi().equalsIgnoreCase(uusi.getNimi()) &&
+                                        a.getSyntymavuosi() == uusi.getSyntymavuosi()
+                        );
+                //Varoitusikkuna jos asukas löytyy jo
+                if (loytyy) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Virhe");
+                    alert.setHeaderText("Asukas on jo olemassa");
+                    alert.setContentText("Sama nimi ja syntymävuosi löytyy jo.");
+                    alert.showAndWait();
+                    return;
+                }
                 asukkaat.add(uusi);
 
-                // päivitetään asunto-olio
+                //Päivitetään asunto-olio
                 asunto.getAsukkaat().clear();
                 asunto.getAsukkaat().addAll(asukkaat);
             }
@@ -169,12 +193,12 @@ public class AsuntoEditController implements Initializable {
         if (vastaus.isPresent() && vastaus.get() == ButtonType.OK) {
             asukkaat.remove(valittu);
 
-            // päivitetään asunto-olio
+         //Päivitetään asunto-olio
             asunto.getAsukkaat().clear();
             asunto.getAsukkaat().addAll(asukkaat);
         }
     }
-
+    //Metodi sulje-painikkeelle
     private void sulje() {
         Stage ikkuna = (Stage) suljePainike.getScene().getWindow();
         ikkuna.close();

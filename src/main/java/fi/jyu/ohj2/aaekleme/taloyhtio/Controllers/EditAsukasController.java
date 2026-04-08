@@ -31,8 +31,8 @@ public class EditAsukasController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        tallennaPainike.setOnAction(e -> tallenna());
-        suljePainike.setOnAction(e -> sulje());
+        tallennaPainike.setOnAction(_ -> tallenna());
+        suljePainike.setOnAction(_ -> sulje());
     }
 
     public void setAsukas(Asukas asukas) {
@@ -58,7 +58,7 @@ public class EditAsukasController implements Initializable {
             nimiKentta.setStyle("-fx-border-color: red;");
             ok = false;
         }
-
+        //Int oletusarvo
         int syntymavuosi = 0;
 
         try {

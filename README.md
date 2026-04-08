@@ -1,6 +1,6 @@
 Ohjelmointi 2 lopputyö
 
-Kyseessä on pieni sovellus, nimeltä Talonmies. Avatessaan ohjelman, käyttäjälle aukeaa seuraava ikkuna:
+Kyseessä on pieni sovellus, nimeltä Talonmies, jossa käyttäjä voi hieman hallinoida talonyhtiötä. Avatessaan ohjelman, käyttäjälle aukeaa seuraava ikkuna:
 
 ![img.png](img.png)
 
@@ -17,7 +17,7 @@ Asunto voi olla max 5 merkkiä pitkä, samaa asuntoa ei voi lisätä kahdesti.
 
 Tuplaklikatessa listattua asuntoa tai painamalla "Muokkaa" asunnon ollessa valittuna, aukeaa seuraava ikkuna: 
 
-![img_2.png](img_2.png)
+![img_9.png](img_9.png)
 
 Tässä näkymässä voidaan lisätä asukkaita asuntoihin ja syöttää heidän tiedot, tässä tapauksessa nimi, syntymävuosi ja sähköposti.
 

@@ -1,6 +1,6 @@
 package fi.jyu.ohj2.aaekleme.taloyhtio.Controllers;
 
-import fi.jyu.ohj2.aaekleme.taloyhtio.Asukas;
+import fi.jyu.ohj2.aaekleme.taloyhtio.Models.Asukas;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;

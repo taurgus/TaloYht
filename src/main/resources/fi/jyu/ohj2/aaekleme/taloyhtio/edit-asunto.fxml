@@ -32,8 +32,8 @@
                   <Insets />
                </HBox.margin>
             </Button>
-            <Button fx:id="poistaAsukasPainike" mnemonicParsing="false" text="Poista asukas" />
             <Button fx:id="muokkaaAsukasPainike" text="Muokkaa asukasta" />
+            <Button fx:id="poistaAsukasPainike" mnemonicParsing="false" text="Poista asukas" />
             <Button fx:id="suljePainike" mnemonicParsing="false" text="Sulje" />
          </children>
       </HBox>

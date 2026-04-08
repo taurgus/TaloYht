@@ -1,5 +1,7 @@
 package fi.jyu.ohj2.aaekleme.taloyhtio;
 
+import fi.jyu.ohj2.aaekleme.taloyhtio.Models.Asukas;
+import fi.jyu.ohj2.aaekleme.taloyhtio.Models.Asunto;
 import org.junit.jupiter.api.Test;
 import java.nio.file.Path;
 import java.util.ArrayList;

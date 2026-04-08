@@ -1,16 +1,20 @@
-package fi.jyu.ohj2.aaekleme.taloyhtio;
+package fi.jyu.ohj2.aaekleme.taloyhtio.Models;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Asunto {
 
+    //Asunnon tunnus
     private String asunto;
+    //Lista asukkaista
     private List<Asukas> asukkaat = new ArrayList<>();
 
+    //Konstrukotorit
     public Asunto() {
     }
 
+    //Asettaa asunnolle osoitteen/tunnuksen
     public Asunto(String asunto) {
         this.asunto = asunto;
     }
@@ -23,6 +27,7 @@ public class Asunto {
         this.asunto = asunto;
     }
 
+    //Palauttaa asukaslistan
     public List<Asukas> getAsukkaat() {
         return asukkaat;
     }

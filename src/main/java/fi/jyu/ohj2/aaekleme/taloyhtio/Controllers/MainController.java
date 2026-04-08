@@ -1,6 +1,6 @@
 package fi.jyu.ohj2.aaekleme.taloyhtio.Controllers;
 
-import fi.jyu.ohj2.aaekleme.taloyhtio.Asunto;
+import fi.jyu.ohj2.aaekleme.taloyhtio.Models.Asunto;
 import fi.jyu.ohj2.aaekleme.taloyhtio.AsuntoTallennus;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -66,12 +66,12 @@ public class MainController implements Initializable {
         asunnot.addAll(tallennus.lataaAsunnot());
         asuntoTaulu.setItems(asunnot);
 
-        lisaaAsuntoPainike.setOnAction(event -> avaaLisaysIkkuna());
-        muokkaaPainike.setOnAction(event -> avaaAsunnonMuokkaus());
-        poistaPainike.setOnAction(event -> poistaValittuAsunto());
-        suljePainike.setOnAction(e -> sulje());
+        lisaaAsuntoPainike.setOnAction(_ -> avaaLisaysIkkuna());
+        muokkaaPainike.setOnAction(_ -> avaaAsunnonMuokkaus());
+        poistaPainike.setOnAction(_ -> poistaValittuAsunto());
+        suljePainike.setOnAction(_ -> sulje());
 
-        asuntoTaulu.setRowFactory(tv -> {
+        asuntoTaulu.setRowFactory(_ -> {
             TableRow<Asunto> rivi = new TableRow<>();
 
             rivi.setOnMouseClicked(event -> {
@@ -144,6 +144,7 @@ public class MainController implements Initializable {
             dialogi.setTitle("Muokkaa asuntoa " +  valittuAsunto.getAsunto());
             dialogi.initModality(Modality.APPLICATION_MODAL);
             dialogi.showAndWait();
+
             //Tallennetaan asukasmäärä
             asuntoTaulu.refresh();
             tallennus.tallennaAsunnot(asunnot);

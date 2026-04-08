@@ -1,6 +1,6 @@
 package fi.jyu.ohj2.aaekleme.taloyhtio.Controllers;
 
-import fi.jyu.ohj2.aaekleme.taloyhtio.Asunto;
+import fi.jyu.ohj2.aaekleme.taloyhtio.Models.Asunto;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -50,6 +50,7 @@ public class AddAsuntoController implements Initializable {
         sulje();
     }
 
+    //Getteri palauttaa asunnon
     public Asunto getUusiAsunto() {
         return uusiAsunto;
     }

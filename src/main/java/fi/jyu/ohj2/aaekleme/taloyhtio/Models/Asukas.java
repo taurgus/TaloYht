@@ -1,4 +1,4 @@
-package fi.jyu.ohj2.aaekleme.taloyhtio;
+package fi.jyu.ohj2.aaekleme.taloyhtio.Models;
 
 public class Asukas {
 
@@ -8,13 +8,14 @@ public class Asukas {
 
     public Asukas() {
     }
-
+    //Konstruktori uudelle asukkaalle
     public Asukas(String nimi, int syntymavuosi, String sahkoposti) {
         this.nimi = nimi;
         this.syntymavuosi = syntymavuosi;
         this.sahkoposti = sahkoposti;
     }
 
+    //Getterit ja setterit
     public String getNimi() {
         return nimi;
     }

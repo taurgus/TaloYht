@@ -1,7 +1,7 @@
 package fi.jyu.ohj2.aaekleme.taloyhtio.Controllers;
 
-import fi.jyu.ohj2.aaekleme.taloyhtio.Asukas;
-import fi.jyu.ohj2.aaekleme.taloyhtio.Asunto;
+import fi.jyu.ohj2.aaekleme.taloyhtio.Models.Asukas;
+import fi.jyu.ohj2.aaekleme.taloyhtio.Models.Asunto;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;

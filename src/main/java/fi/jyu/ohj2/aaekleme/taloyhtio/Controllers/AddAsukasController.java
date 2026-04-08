@@ -1,6 +1,6 @@
 package fi.jyu.ohj2.aaekleme.taloyhtio.Controllers;
 
-import fi.jyu.ohj2.aaekleme.taloyhtio.Asukas;
+import fi.jyu.ohj2.aaekleme.taloyhtio.Models.Asukas;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -31,10 +31,11 @@ public class AddAsukasController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        tallennaPainike.setOnAction(e -> tallenna());
-        suljePainike.setOnAction(e -> sulje());
-        javafx.application.Platform.runLater(() -> tallennaPainike.requestFocus());
+        tallennaPainike.setOnAction(_ -> tallenna());
+        suljePainike.setOnAction(_ -> sulje());
 
+        // Asetetaan fokus tallenna-nappiin
+        javafx.application.Platform.runLater(() -> tallennaPainike.requestFocus());
     }
 
     private void tallenna() {

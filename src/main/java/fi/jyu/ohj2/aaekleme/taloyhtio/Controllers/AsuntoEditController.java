@@ -21,6 +21,7 @@ import java.util.ResourceBundle;
 
 public class AsuntoEditController implements Initializable {
 
+    //Näkymä
     @FXML
     private Label asuntoLabel;
 

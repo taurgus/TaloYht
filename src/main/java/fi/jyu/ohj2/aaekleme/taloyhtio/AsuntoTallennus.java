@@ -20,11 +20,12 @@ public class AsuntoTallennus {
         this.tiedosto = tiedosto;
     }
 
+
     public List<Asunto> lataaAsunnot() {
         if (!Files.exists(tiedosto)) {
             return new ArrayList<>();
         }
-
+    //Muunnetaan JSON olioksi
         return mapper.readValue(
                 tiedosto.toFile(),
                 new TypeReference<List<Asunto>>() {}

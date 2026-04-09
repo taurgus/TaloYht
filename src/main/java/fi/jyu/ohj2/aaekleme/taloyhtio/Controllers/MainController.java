@@ -50,7 +50,7 @@ public class MainController implements Initializable {
     private Button suljePainike;
 
     private final ObservableList<Asunto> asunnot = FXCollections.observableArrayList();
-    //JSON
+    //JSON-polun määrittely
     private final AsuntoTallennus tallennus = new AsuntoTallennus(Path.of("asunnot.json"));
 
     //Initialize, mitä tehdään heti näkymän aluksi

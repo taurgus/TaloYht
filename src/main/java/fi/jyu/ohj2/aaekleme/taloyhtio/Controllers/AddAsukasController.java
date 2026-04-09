@@ -39,10 +39,12 @@ public class AddAsukasController implements Initializable {
     }
 
     private void tallenna() {
+        //Normaali ulkoasu
         nimiKentta.setStyle("");
         syntymavuosiKentta.setStyle("");
         sahkopostiKentta.setStyle("");
 
+        //Muuttuja tarkistuksiin
         boolean ok = true;
 
         String nimi = nimiKentta.getText();

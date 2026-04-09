@@ -19,6 +19,7 @@ public class Asunto {
         this.asunto = asunto;
     }
 
+    //Getteri ja setteri
     public String getAsunto() {
         return asunto;
     }
@@ -32,6 +33,7 @@ public class Asunto {
         return asukkaat;
     }
 
+    //JSON-lataus
     public void setAsukkaat(List<Asukas> asukkaat) {
         this.asukkaat = asukkaat;
     }

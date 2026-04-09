@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 
 public class App extends Application {
 
+    //Ladataan näkymä
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));

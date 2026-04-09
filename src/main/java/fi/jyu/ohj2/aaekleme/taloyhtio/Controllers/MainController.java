@@ -53,6 +53,7 @@ public class MainController implements Initializable {
     //JSON
     private final AsuntoTallennus tallennus = new AsuntoTallennus(Path.of("asunnot.json"));
 
+    //Initialize, mitä tehdään heti näkymän aluksi
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         asuntoSarake.setCellValueFactory(data ->
@@ -63,14 +64,17 @@ public class MainController implements Initializable {
                 new SimpleIntegerProperty(data.getValue().getAsukasmaara())
         );
 
+        //Ladataan ja lisätään listaan asunnot
         asunnot.addAll(tallennus.lataaAsunnot());
         asuntoTaulu.setItems(asunnot);
 
+        //Toiminnallisuudet
         lisaaAsuntoPainike.setOnAction(_ -> avaaLisaysIkkuna());
         muokkaaPainike.setOnAction(_ -> avaaAsunnonMuokkaus());
         poistaPainike.setOnAction(_ -> poistaValittuAsunto());
         suljePainike.setOnAction(_ -> sulje());
 
+        //Tuplaklikkauksella asunto-ikkunan avaaminen
         asuntoTaulu.setRowFactory(_ -> {
             TableRow<Asunto> rivi = new TableRow<>();
 
@@ -86,21 +90,24 @@ public class MainController implements Initializable {
 
     private void avaaLisaysIkkuna() {
         try {
+            //Ladataan lisäys-näkymä
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fi/jyu/ohj2/aaekleme/taloyhtio/add-asunto.fxml"));
             Parent root = loader.load();
 
+            //Haetaan asunnon lisäys controller
             AddAsuntoController ohjain = loader.getController();
 
+            //Tehdään uusi ikkuna
             Stage dialogi = new Stage();
             dialogi.setScene(new Scene(root));
             dialogi.setTitle("Lisää asunto");
             dialogi.initModality(Modality.APPLICATION_MODAL);
             dialogi.showAndWait();
 
-            //Estetään tuplat
+            //Haetaan lisätty asunto
             Asunto uusiAsunto = ohjain.getUusiAsunto();
             if (uusiAsunto != null) {
-
+            //Estetään tuplat
                 boolean loytyy = asunnot.stream()
                         .anyMatch(a -> a.getAsunto().equalsIgnoreCase(uusiAsunto.getAsunto()));
 
@@ -112,10 +119,11 @@ public class MainController implements Initializable {
                     alert.showAndWait();
                     return;
                 }
-
+            //Lisätään asunto listaan ja tallenettaan
                 asunnot.add(uusiAsunto);
                 tallennus.tallennaAsunnot(asunnot);
 
+            //Valitaan lisätty asunto taulusta
                 asuntoTaulu.getSelectionModel().select(uusiAsunto);
                 asuntoTaulu.requestFocus();
             }
@@ -124,7 +132,7 @@ public class MainController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-
+            //Asunnon muokkaus-metodi
     private void avaaAsunnonMuokkaus() {
         Asunto valittuAsunto = asuntoTaulu.getSelectionModel().getSelectedItem();
 
@@ -145,7 +153,7 @@ public class MainController implements Initializable {
             dialogi.initModality(Modality.APPLICATION_MODAL);
             dialogi.showAndWait();
 
-            //Tallennetaan asukasmäärä
+            //Tallennetaan muutokset
             asuntoTaulu.refresh();
             tallennus.tallennaAsunnot(asunnot);
 
@@ -155,22 +163,26 @@ public class MainController implements Initializable {
     }
 
     private void poistaValittuAsunto() {
+
+        //Haetaan poistettava asunto
         Asunto valittuAsunto = asuntoTaulu.getSelectionModel().getSelectedItem();
 
         if (valittuAsunto == null) {
             return;
         }
 
-        //Alert-systeemi
+        //Alert-systeemi, varmistetaan että käyttäjä haluaa poistaa asunnon
         Alert varmistus = new Alert(Alert.AlertType.CONFIRMATION);
         varmistus.setTitle("Vahvista poisto");
         varmistus.setHeaderText("Poistetaanko asunto?");
         varmistus.setContentText("Poistetaan asunto " + valittuAsunto.getAsunto() + ".");
 
         Optional<ButtonType> vastaus = varmistus.showAndWait();
-
+        //Poistetaan asunto, jos käyttäjä hyväksyy sen
         if (vastaus.isPresent() && vastaus.get() == ButtonType.OK) {
+            //Poisto
             asunnot.remove(valittuAsunto);
+            //Tallennus
             tallennus.tallennaAsunnot(asunnot);
         }
     }
